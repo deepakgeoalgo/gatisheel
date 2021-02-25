@@ -79,6 +79,7 @@ class InstallationController extends Controller
         $user->email  =  $request->email;
         $user->phone  =  $request->phone;
         $user->password  =  Hash::make($request->password);
+        $user->assignRole('Customer');
         $user->save();        
 
         $installations = new Installation();
@@ -93,6 +94,8 @@ class InstallationController extends Controller
         $installations->image =  $filename;         
         $installations->invoice_value  =  $request->invoice_value;
         $installations->save();
+
+        // $user->assignRole('Customer');
 
         if ($installations) {
             return redirect()->route('installations.index')
