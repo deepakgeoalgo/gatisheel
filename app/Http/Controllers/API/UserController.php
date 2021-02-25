@@ -12,13 +12,16 @@ use Validator;
 class UserController extends Controller
 {
     public function login( Request $request){ 
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+
+        if(Auth::attempt( ['email' => $request->email, 'password' => $request->password]) || Auth::attempt( ['phone' => $request->email, 'password' => $request->password])){ 
          	$user = Auth::user(); 
             $accessToken = auth()->user()->createToken('authToken')->accessToken;
+            
             return response()->json([
                 'access_token' => auth()->user()->createToken('authToken')->accessToken,
                 'token_type' => 'Bearer',
                 'user'=>auth()->user(),
+                'role'=>'staff',
             ]); 
         } 
         else{ 

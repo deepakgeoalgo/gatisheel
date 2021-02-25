@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\Installation;
 use App\Models\User;
 use Hash;
+use DB;
 
 class InstallationController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:installation-list|installation-create|installation-edit|installation-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:installation-create', ['only' => ['create','store']]);
+         $this->middleware('permission:installation-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:installation-delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *

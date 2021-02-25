@@ -47,7 +47,7 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Email</label>
-                                                <input type="email" class="form-control" placeholder="Year" name="email" value="{{ old('email') }}" required data-validation-required-message="This year field is required">
+                                                <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required data-validation-required-message="This year field is required">
                                             </div>
                                         </div>                           
 
