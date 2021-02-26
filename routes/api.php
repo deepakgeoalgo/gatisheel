@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('issues', [CreateIssueController::class,'issueStore'])->name('issues.store');
     Route::get('issues/edit/{id?}', [CreateIssueController::class,'issueEdit'])->name('issues.edit');
     Route::post('issues/update/{id?}', [CreateIssueController::class,'issueUpdate'])->name('issues.update');
-    Route::get('issues/destroy/{id?}', [CreateIssueController::class,'issueDestroy'])->name('issues.destroy');
+    Route::post('issues/destroy/{id?}', [CreateIssueController::class,'issueDestroy'])->name('issues.destroy');
 });
 
 

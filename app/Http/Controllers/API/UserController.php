@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\User; 
+use App\Models\Role;
 use Illuminate\Support\Facades\Auth; 
 use Validator;
 
@@ -21,6 +22,10 @@ class UserController extends Controller
                 'access_token' => auth()->user()->createToken('authToken')->accessToken,
                 'token_type' => 'Bearer',
                 'user'=>auth()->user(),
+                // 'role'=> auth()->user()->getRoleNames(),
+                // 'role'=> auth()->user()->getRoleNames(),
+                'role' => $user->roles()->pluck('name'),
+
             ]); 
         } 
         else{ 

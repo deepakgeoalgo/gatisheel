@@ -10,7 +10,7 @@ class CreateIssueController extends Controller
 {
     public function issueList(Request $request)
     {
-        $data = CreateIssue::orderBy('id','DESC')->paginate(15);
+        $data = CreateIssue::all();
         return response()->json(['success' => $data]);
     }
     // ------------------------------------------------------------------------
@@ -31,8 +31,7 @@ class CreateIssueController extends Controller
             'ownership'  =>  $request->ownership,
         ]);
 
-        return redirect()->route('issues.index')
-                    ->with('success','Record saved successfully !!');
+        return response()->json(['success' => 'Record saved!']);
 
     }
     // ------------------------------------------------------------------------
