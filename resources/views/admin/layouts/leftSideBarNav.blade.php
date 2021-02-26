@@ -18,7 +18,7 @@
 
                 <li class="navigation-header"><span>Modules</span>
                 </li>               
-                <li class="nav-item"><a href="{{ route('users.index') }}"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Team">Technician/Dealer</span></a>
+                <li class="nav-item"><a href="{{ route('technicians.index') }}"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Team">Technician/Dealer</span></a>
                 </li>
 
                 <li><a href="{{ route('installations.index') }}"><i class="feather icon-settings"></i><span class="menu-item" data-i18n="View">Installation</span></a>

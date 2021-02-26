@@ -9,6 +9,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\CreateIssueController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\TechnicianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('users/edit/{id?}', [UserController::class,'edit'])->name('users.edit');
     Route::post('users/update/{id?}', [UserController::class,'update'])->name('users.update');
     Route::get('users/destroy/{id?}', [UserController::class,'destroy'])->name('users.destroy');    
+
+    // Technician
+    Route::get('technicians', [TechnicianController::class,'index'])->name('technicians.index');    
+    Route::get('technicians/create', [TechnicianController::class,'create'])->name('technicians.create');
+    Route::post('technicians', [TechnicianController::class,'store'])->name('technicians.store');
+    Route::get('technicians/show/{id?}', [TechnicianController::class,'show'])->name('technicians.show');
+    Route::get('technicians/edit/{id?}', [TechnicianController::class,'edit'])->name('technicians.edit');
+    Route::post('technicians/update/{id?}', [TechnicianController::class,'update'])->name('technicians.update');
+    Route::get('technicians/destroy/{id?}', [TechnicianController::class,'destroy'])->name('technicians.destroy');
 
     // Installation form
     Route::get('installations', [InstallationController::class,'index'])->name('installations.index');    
