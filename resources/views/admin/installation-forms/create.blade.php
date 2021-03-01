@@ -27,7 +27,7 @@
                     <ul class="nav nav-tabs mb-3" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link d-flex align-items-center active" id="account-tab" data-toggle="tab" href="#account" aria-controls="account" role="tab" aria-selected="true">
-                                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Installation details</span>
+                                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Installation Details</span>
                             </a>
                         </li>                        
                     </ul>
@@ -49,12 +49,11 @@
                                                 <label>Email</label>
                                                 <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required data-validation-required-message="This year field is required">
                                             </div>
-                                        </div>                           
-
+                                        </div>
                                         <div class="form-group">
                                             <div class="controls">
-                                                <label>Year</label>
-                                                <input type="text" class="form-control" placeholder="Year" name="year" value="{{ old('year') }}" required data-validation-required-message="This year field is required">
+                                                <label>Phone</label>
+                                                <input type="number" class="form-control" placeholder="Customer Phone" name="phone" value="{{ old('phone') }}" required data-validation-required-message="This phone field is required">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -63,25 +62,33 @@
                                                 <input type="text" class="form-control" placeholder="Village" name="village_name" value="{{ old('village_name') }}" required data-validation-required-message="This village field is required">
                                             </div>
                                         </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Type of Model</label>
-                                            <select class="form-control" id="model_type" name="model_type">
-                                                <option value="null">Select Model</option>    
-                                                <option value="MP4">MP4</option>
-                                                <option value="GSM Dryrun">GSM dryrun</option>
-                                                <option value="M4+Battery">M4+battery</option>
-                                            </select>
-                                        </div>
                                         <div class="form-group">
                                             <div class="controls">
-                                                <label>Customer Mobile</label>
-                                                <input type="number" class="form-control" placeholder="Customer Mobile" name="phone" value="{{ old('phone') }}" required data-validation-required-message="This phone field is required">
+                                                <label>District</label>
+                                                <input type="text" class="form-control" placeholder="District" name="district" value="{{ old('district') }}" required data-validation-required-message="This district field is required">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="controls">
-                                                <label>Installation Address</label>
+                                                <label>State</label>
+                                                <input type="text" class="form-control" placeholder="State" name="state" value="{{ old('state') }}" required data-validation-required-message="This state field is required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Pincode</label>
+                                                <input type="text" class="form-control" placeholder="Pincode" name="pincode" value="{{ old('pincode') }}" required data-validation-required-message="This pincode field is required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Year of Installation</label>
+                                                <input type="text" class="form-control" placeholder="Year" name="year" value="{{ old('year') }}" required data-validation-required-message="This year field is required">
+                                            </div>
+                                        </div>                                        
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Machine Installation Address</label>
                                                 <textarea class="form-control" name="installtion_address" id="installtion_address" placeholder="Installation Address">{{ old('installtion_address') }}</textarea>
                                             </div>
                                         </div>   
@@ -89,6 +96,17 @@
                                     </div>
 
                                     <div class="col-12 col-sm-6">
+                                        
+                                        <div class="form-group">
+                                            <label>Type of Model</label>
+                                            <select class="form-control" id="model_type" name="model_type">
+                                                <option value="">Select Model</option>    
+                                                <option value="MP4">MP4</option>
+                                                <option value="GSM Dryrun">GSM dryrun</option>
+                                                <option value="M4+Battery">M4+battery</option>
+                                            </select>
+                                        </div>
+
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Installation Machine Number</label>
@@ -109,16 +127,28 @@
                                         </div> 
                                         <div class="form-group">
                                             <div class="controls">
-                                                <label>Images</label>
-                                                <input type="file" class="form-control" placeholder="Installation Date" name="image" value="{{ old('image') }}" required data-validation-required-message="This installation image field is required">
+                                                <label>Installation Image</label>
+                                                <input type="file" class="form-control" placeholder="Installation Date" name="installtion_image" value="{{ old('installtion_image') }}" required data-validation-required-message="This installation image field is required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Responsible Service Person</label>
+                                                <input type="text" class="form-control" placeholder="Responsible Service Person" name="responsible_service_person" value="{{ old('responsible_service_person') }}" required data-validation-required-message="This responsible service person field is required">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Warranty Date</label>
+                                                <input type="date" class="form-control" placeholder="Warranty Date" name="warranty" value="{{ old('warranty') }}" required data-validation-required-message="This warranty field is required">
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Invoice Value</label>
-                                                <input type="text" class="form-control" placeholder="Invoice Value Date" name="invoice_value" value="{{ old('invoice_value') }}" required data-validation-required-message="This invoice value field is required">
+                                                <input type="text" class="form-control" placeholder="Invoice Value" name="invoice_value" value="{{ old('invoice_value') }}" required data-validation-required-message="This invoice value field is required">
                                             </div>
-                                        </div>   
+                                        </div>    
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Password</label>
@@ -160,5 +190,15 @@
       x.innerHTML = "Latitude: " + position.coords.latitude + 
       "\nLongitude: " + position.coords.longitude;
     }
+
+    // Option selected
+    $(document).ready(function() {
+        const modelTypeOldValue = '{{ old('model_type') }}';
+
+        if(modelTypeOldValue !== '') {
+          $('#model_type').val(modelTypeOldValue);
+        }
+    });
+
 </script>
 @endsection

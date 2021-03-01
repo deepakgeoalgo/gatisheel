@@ -10,17 +10,20 @@ class Installation extends Model
     use HasFactory;
 
     protected $fillable = [
-    	'year',
     	'village_name',
-    	'customer_name',
-    	'model_type',
-    	'customer_phone',
-    	'installtion_address',
-    	'installtion_machine_number',
-    	'installtion_phone',
-    	'installtion_date',
-    	'image',
-    	'invoice_value',
+        'district',
+        'state',
+        'pincode',
+        'installtion_address',
+        'year',
+        'model_type',
+        'installtion_machine_number',
+        'installtion_phone',
+        'installtion_date',
+        'installtion_image',
+        'responsible_service_person',
+        'warranty',
+        'invoice_value',
     ];
 
     public function user()

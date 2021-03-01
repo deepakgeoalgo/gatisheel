@@ -21,6 +21,9 @@
                 <li class="nav-item"><a href="{{ route('technicians.index') }}"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Team">Technician/Dealer</span></a>
                 </li>
 
+                <li><a href="{{ route('machines.index') }}"><i class="feather icon-info"></i><span class="menu-item" data-i18n="View">Machine</span></a>
+                </li>
+
                 <li><a href="{{ route('installations.index') }}"><i class="feather icon-settings"></i><span class="menu-item" data-i18n="View">Installation</span></a>
                 </li>
 

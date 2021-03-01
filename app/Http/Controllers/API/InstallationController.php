@@ -11,6 +11,14 @@ use Hash;
 
 class InstallationController extends Controller
 {
+    function __construct()
+    {
+         $this->middleware('permission:installation-list|installation-create|installation-edit|installation-delete', ['only' => ['index','store']]);
+         $this->middleware('permission:installation-create', ['only' => ['create','store']]);
+         $this->middleware('permission:installation-edit', ['only' => ['edit','update']]);
+         $this->middleware('permission:installation-delete', ['only' => ['destroy']]);
+    }
+
     public function installationList()
     {
     	$data = Installation::orderBy('id','DESC')->with('user')->paginate(15);
@@ -23,24 +31,28 @@ class InstallationController extends Controller
     {
     	$this->validate($request, [
             'name'  => 'required',
-            'email' => 'required',
-            'phone' =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-            'year'  => 'required',
+            'email' => 'required|email|unique:users,email',
+            'phone' =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:users',            
             'village_name'  => 'required',
-            'model_type'    => 'required',
+            'district'  => 'required',
+            'state'  => 'required',
+            'pincode'  => 'required',
             'installtion_address'   => 'required',
+            'year'  => 'required',
+            'model_type'    => 'required',            
             'installtion_machine_number'    => 'required',
             'installtion_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
             'installtion_date'  => 'required',
-            'image' => 'required',
-            'invoice_value' => 'required',
+            'installtion_image' => 'required',
+            'responsible_service_person' => 'required',
+            'warranty' => 'required',
             'password'  => 'required'
         ]);
 
-        if ($request->hasFile('image') && $request->image->isValid()) {
-            $extension = $request->image->extension();
+        if ($request->hasFile('installtion_image') && $request->installtion_image->isValid()) {
+            $extension = $request->installtion_image->extension();
             $filename = "product_".time().".".$extension;
-            $request->image->move(public_path('product_images'), $filename);
+            $request->installtion_image->move(public_path('product_images'), $filename);
         }else {
             echo "Image Not Uploaded!";
         }
@@ -50,24 +62,28 @@ class InstallationController extends Controller
         $user->email  =  $request->email;
         $user->phone  =  $request->phone;
         $user->password  =  Hash::make($request->password);
+        $user->assignRole('Customer');
         $user->save();        
 
         $installations = new Installation();
         $installations->user_id = $user->id;
-        $installations->year  = $request->year;
         $installations->village_name  =  $request->village_name;
-        $installations->model_type  =  $request->model_type;
+        $installations->district  =  $request->district;
+        $installations->state  =  $request->state;
+        $installations->pincode  =  $request->pincode;
         $installations->installtion_address  =  $request->installtion_address;
+        $installations->year  = $request->year;        
+        $installations->model_type  =  $request->model_type;        
         $installations->installtion_machine_number  =  $request->installtion_machine_number;
         $installations->installtion_phone  =  $request->installtion_phone;
         $installations->installtion_date  =  $request->installtion_date;
-        $installations->image =  $filename;         
+        $installations->installtion_image =  $filename;         
+        $installations->responsible_service_person  =  $request->responsible_service_person;
+        $installations->warranty  =  $request->warranty;
         $installations->invoice_value  =  $request->invoice_value;
         $installations->save();
 
-        if ($installations) {
-            return response()->json(['success' => $installations]);
-        }
+        return response()->json(['success' => 'Record saved!']);
     }
     // ------------------------------------------------------------------------
     public function installationEdit($id)
@@ -80,33 +96,34 @@ class InstallationController extends Controller
     public function installationUpdate(Request $request, $id)
     {
         $installations = Installation::find($id);
-
-        if ($request->hasFile('image') && $request->image->isValid()) {
-            $extension = $request->image->extension();
+        if ($request->hasFile('installtion_image') && $request->installtion_image->isValid()) {
+            $extension = $request->installtion_image->extension();
             $filename = "product_".time().".".$extension;
-            $request->image->move(public_path('product_images'), $filename);
-            $installations->image = $filename;
-        }else {
-            echo "Image Not Uploaded!";
+            $request->installtion_image->move(public_path('product_images'), $filename);
+            $installations->installtion_image = $filename;
         }
 
-        $user = new User();
+        $user = User::find($installations->user_id);
         $user->name  =  $request->name;
         $user->email  =  $request->email;
         $user->phone  =  $request->phone;
         $user->password  =  Hash::make($request->password);
-        $user->save();
+        $user->save();        
 
         $installations->user_id = $user->id;
-        $installations->year = $request->input('year');
-        $installations->village_name = $request->input('village_name');
-        $installations->model_type = $request->input('model_type');
-        $installations->installtion_address = $request->input('installtion_address');
-        $installations->installtion_machine_number = $request->input('installtion_machine_number');
-        $installations->installtion_phone = $request->input('installtion_phone');
-        $installations->installtion_date = $request->input('installtion_date');        
-        $installations->invoice_value = $request->input('invoice_value');
-
+        $installations->village_name  =  $request->village_name;
+        $installations->district  =  $request->district;
+        $installations->state  =  $request->state;
+        $installations->pincode  =  $request->pincode;
+        $installations->installtion_address  =  $request->installtion_address;
+        $installations->year  = $request->year;        
+        $installations->model_type  =  $request->model_type;        
+        $installations->installtion_machine_number  =  $request->installtion_machine_number;        
+        $installations->installtion_phone  =  $request->installtion_phone;
+        $installations->installtion_date  =  $request->installtion_date;       
+        $installations->responsible_service_person  =  $request->responsible_service_person;
+        $installations->warranty  =  $request->warranty;
+        $installations->invoice_value  =  $request->invoice_value;
         $installations->save();
 
         return response()->json(['success' => $installations]);

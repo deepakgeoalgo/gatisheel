@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header">
                         <span class="text-primary text-bold-700">Technician/Dealer List</span>
-                        <a href="{{ route('technicians.create') }}" class="btn btn-primary"><i class="fas fa-plus pr-1"></i>Installation</a>
+                        <a href="{{ route('technicians.create') }}" class="btn btn-primary"><i class="fas fa-plus pr-1"></i>Technician</a>
                     </div>
                     <div class="card-content">
                         <div class="card-body card-dashboard">

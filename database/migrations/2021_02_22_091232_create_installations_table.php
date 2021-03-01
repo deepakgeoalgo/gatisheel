@@ -15,16 +15,21 @@ class CreateInstallationsTable extends Migration
     {
         Schema::create('installations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('year');
+            $table->unsignedBigInteger('user_id');            
             $table->string('village_name');
-            $table->string('model_type');
+            $table->string('district');
+            $table->string('state');
+            $table->string('pincode');
             $table->text('installtion_address')->nullable();
+            $table->string('year');
+            $table->string('model_type');            
             $table->string('installtion_machine_number')->nullable();
             $table->string('installtion_phone')->nullable();
             $table->string('installtion_date');
-            $table->string('image')->nullable();
-            $table->string('invoice_value')->nullable();
+            $table->string('installtion_image')->nullable();
+            $table->string('responsible_service_person')->nullable();
+            $table->string('warranty');
+            $table->string('invoice_value');
             $table->boolean('status')->default(1);
             $table->bigInteger('created_by')->default(0);
             $table->bigInteger('updated_by')->default(0); 

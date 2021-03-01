@@ -33,9 +33,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     // Installation form
     Route::get('installations', [InstallationController::class,'installationList'])->name('installations.index');
     Route::post('installations', [InstallationController::class,'installationStore'])->name('installations.store');
-    Route::get('installations/edit/{id?}', [InstallationController::class,'installationEdit'])->name('installations.edit');
+    Route::post('installations/edit/{id?}', [InstallationController::class,'installationEdit'])->name('installations.edit');
     Route::post('installations/update/{id?}', [InstallationController::class,'installationUpdate'])->name('installations.update');
-    Route::get('installations/destroy/{id?}', [InstallationController::class,'installationDestroy'])->name('installations.destroy');
+    Route::post('installations/destroy/{id?}', [InstallationController::class,'installationDestroy'])->name('installations.destroy');
 
     // Create Issue
     Route::get('issues', [CreateIssueController::class,'issueList'])->name('issues.index');

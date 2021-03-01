@@ -10,6 +10,7 @@ use App\Http\Controllers\InstallationController;
 use App\Http\Controllers\CreateIssueController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TechnicianController;
+use App\Http\Controllers\MachineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,10 +53,20 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('technicians/update/{id?}', [TechnicianController::class,'update'])->name('technicians.update');
     Route::get('technicians/destroy/{id?}', [TechnicianController::class,'destroy'])->name('technicians.destroy');
 
+    // Machine
+    Route::get('machines', [MachineController::class,'index'])->name('machines.index');    
+    Route::get('machines/create', [MachineController::class,'create'])->name('machines.create');
+    Route::post('machines', [MachineController::class,'store'])->name('machines.store');
+    Route::get('machines/show/{id?}', [MachineController::class,'show'])->name('machines.show');
+    Route::get('machines/edit/{id?}', [MachineController::class,'edit'])->name('machines.edit');
+    Route::post('machines/update/{id?}', [MachineController::class,'update'])->name('machines.update');
+    Route::get('machines/destroy/{id?}', [MachineController::class,'destroy'])->name('machines.destroy');
+
     // Installation form
     Route::get('installations', [InstallationController::class,'index'])->name('installations.index');    
     Route::get('installations/create', [InstallationController::class,'create'])->name('installations.create');
     Route::post('installations', [InstallationController::class,'store'])->name('installations.store');
+    Route::get('installations/show/{id?}', [InstallationController::class,'show'])->name('installations.show');
     Route::get('installations/edit/{id?}', [InstallationController::class,'edit'])->name('installations.edit');
     Route::post('installations/update/{id?}', [InstallationController::class,'update'])->name('installations.update');
     Route::get('installations/destroy/{id?}', [InstallationController::class,'destroy'])->name('installations.destroy');
