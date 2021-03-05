@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Installation extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
     	'village_name',
@@ -29,5 +31,10 @@ class Installation extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id' , 'id');
+    }
+
+    public function issue()
+    {
+        return $this->hasOne('App\Models\CreateIssue', 'installation_id' , 'id');
     }
 }

@@ -27,28 +27,37 @@
                     <ul class="nav nav-tabs mb-3" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link d-flex align-items-center active" id="account-tab" data-toggle="tab" href="#account" aria-controls="account" role="tab" aria-selected="true">
-                                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Ticket Details</span>
+                                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Ticket Assign</span>
                             </a>
                         </li>                        
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="account" aria-labelledby="account-tab" role="tabpanel">                            
                             <!-- Form start -->
-                            <form action="{{ route('issues.update', $issues->id) }}" method="POST" novalidate>
+                            <form action="{{ route('assign.update', $assigned->id) }}" method="POST" novalidate>
                                 @csrf
                                 <div class="row">
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Issue Date</label>
-                                                <input type="date" class="form-control" placeholder="Issue Date" name="issue_date" value="{{ $issues->issue_date }}" required data-validation-required-message="This issue date field is required">
+                                                <input type="date" class="form-control" placeholder="Issue Date" name="issue_date" value="{{ $assigned->issue_date }}" required data-validation-required-message="This issue date field is required" disabled>
                                             </div>
                                         </div>                                        
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Issue Description</label>
-                                                <textarea class="form-control" name="issue_description" id="issue_description" placeholder="Issue Description">{{ $issues->issue_description }}</textarea>
+                                                <textarea class="form-control" name="issue_description" id="issue_description" placeholder="Issue Description" disabled>{{ $assigned->issue_description }}</textarea>
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Assign To</label>
+                                            <select class="form-control" id="assign_to" name="assign_to">
+                                                <option value="">Select Technician</option>  
+                                                @foreach (\App\Models\Technician::with('user')->get() as $key => $technician)  
+                                                <option value="{{ $technician->user->id }}">{{ $technician->user->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
@@ -56,31 +65,26 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Current Status</label>
-                                                <select class="form-control" id="current_status" name="current_status">
-                                                <option value="">Select Status</option>
-                                                @foreach($statuses as $status)    
-                                                <option value="{{ $status->id }}" selected>{{ $status->name }}</option>
-                                                @endforeach
-                                                </select>                                               
+                                                <input type="text" class="form-control" placeholder="Current Status" name="current_status" value="{{ $assigned->currentStatus->name }}" required data-validation-required-message="This current status field is required" disabled>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Ownership</label>
-                                                <select class="form-control" id="ownership" name="ownership">
-                                                <option value="">Select Ownership</option>
-                                                @foreach($installations as $owner)    
-                                                <option value="{{ $owner->user->id }}" selected>{{ $owner->user->phone }}</option>
-                                                @endforeach
-                                                </select>
-
-                                                <!-- <input type="text" class="form-control" placeholder="Ownership" name="ownership" value="{{ $issues->owner->name }}" required data-validation-required-message="This ownership field is required"> -->
+                                                <input type="text" class="form-control" placeholder="Ownership" name="ownership" value="{{ $assigned->owner->name }}" required data-validation-required-message="This ownership field is required" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Owner Location</label>
+                                                <input type="text" class="form-control" value="{{ $assigned->CustomerDetails ? $assigned->CustomerDetails->district : '' }}" disabled>
+                                                <span></span>
                                             </div>
                                         </div>                   
                                     </div>                                  
 
                                     <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                        <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-1">Update</button>
+                                        <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-1">Assign</button>
                                         <a href="{{ route('issues.index') }}" class="btn btn-info">Back</a>
                                     </div>
                                 </div>
@@ -98,19 +102,6 @@
 
 @section('page-script')
     <script>
-    var x = document.getElementById("installtion_address");
-
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-    }
-
-    function showPosition(position) {
-      x.innerHTML = "Latitude: " + position.coords.latitude + 
-      "\nLongitude: " + position.coords.longitude;
-    }
-</script>
+    
+    </script>
 @endsection

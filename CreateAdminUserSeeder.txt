@@ -1,0 +1,15 @@
+---------------------------------------------------------------------
+|| STEP FOR::Create Seeder For Permissions and AdminUser
+---------------------------------------------------------------------
+# php artisan make:seeder PermissionTableSeeder
+# php artisan db:seed --class=PermissionTableSeeder
+---------------------------------------------------------------------
+
+---------------------------------------------------------------------
+|| STEP FOR::Create new seeder for creating admin user.
+---------------------------------------------------------------------
+# php artisan make:seeder CreateAdminUserSeeder
+# php artisan db:seed --class=CreateAdminUserSeeder
+---------------------------------------------------------------------
+
+php artisan passport:install

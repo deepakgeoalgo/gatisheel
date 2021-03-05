@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Installation;
 use App\Models\User;
+use App\Models\Machine;
 use Hash;
 use DB;
 
@@ -38,7 +39,8 @@ class InstallationController extends Controller
      */
     public function create()
     {
-        return view('admin.installation-forms.create');
+        $machines = Machine::get();
+        return view('admin.installation-forms.create',compact('machines'));
     }
     // ------------------------------------------------------------------------
 
@@ -52,7 +54,7 @@ class InstallationController extends Controller
     {
         $this->validate($request, [
             'name'  => 'required',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'phone' =>  'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:users',            
             'village_name'  => 'required',
             'district'  => 'required',
@@ -102,6 +104,7 @@ class InstallationController extends Controller
         $installations->responsible_service_person  =  $request->responsible_service_person;
         $installations->warranty  =  $request->warranty;
         $installations->invoice_value  =  $request->invoice_value;
+        $installations->created_by  =  Auth()->user()->id;
         $installations->save();
 
         // $user->assignRole('Customer');
@@ -177,6 +180,7 @@ class InstallationController extends Controller
         $installations->responsible_service_person  =  $request->responsible_service_person;
         $installations->warranty  =  $request->warranty;
         $installations->invoice_value  =  $request->invoice_value;
+        $installations->updated_by  =  Auth()->user()->id;
         $installations->save();
 
         return redirect()->route('installations.index')

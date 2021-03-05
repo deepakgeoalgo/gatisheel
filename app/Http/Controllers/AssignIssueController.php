@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Machine;
+use App\Models\AssignIssue;
+use App\Models\CreateIssue;
+use App\Models\Technician;
 
-class MachineController extends Controller
+class AssignIssueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class MachineController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Machine::orderBy('id','DESC')->paginate(15);
-        return view('admin.machines.index',compact('data'))
+        $data = AssignIssue::orderBy('id','DESC')->with('createIssue')->paginate(15);
+        return view('admin.assign-issues.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 15);
     }
     // ------------------------------------------------------------------------
@@ -27,7 +29,9 @@ class MachineController extends Controller
      */
     public function create()
     {
-        return view('admin.machines.create');
+        $issues = CreateIssue::get();
+        $technicianes = Technician::with('user')->get();
+        return view('admin.assign-issues.create', compact('issues', 'technicianes'));
     }
     // ------------------------------------------------------------------------
 
@@ -40,20 +44,19 @@ class MachineController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'machine_model'     => 'required|unique:machines',
-            'machine_number'    => 'required|unique:machines',
-            'machine_details'   =>  'required'
+            'issue'  => 'required',
+            'assigned_to'  => 'required',
         ]);
 
-        $machine = new Machine();
-        $machine->machine_model = $request->machine_model;
-        $machine->machine_number = $request->machine_number;
-        $machine->machine_details = $request->machine_details;
-        $machine->machine_warranty = $request->machine_warranty;
-        $machine->save();
+        $assign = new AssignIssue();
+        $assign->issue_id  =  $request->get('issue');
+        $assign->issue  =  $request->issue;
+        $assign->assigned_to  =  $request->assigned_to;
+        $assign->comment  =  $request->comment;
+        $assign->save();
 
-        return redirect()->route('machines.index')
-            ->with('success', 'Record saved successfully');
+        return redirect()->route('assign-issues.create')
+                    ->with('success','Record saved successfully !!');
     }
     // ------------------------------------------------------------------------
 
@@ -77,9 +80,11 @@ class MachineController extends Controller
      */
     public function edit($id)
     {
-        $machines = Machine::find($id);
+        $assign = AssignIssue::find($id);
+        $issues = CreateIssue::get();
+        $technicianes = Technician::with('user')->get();
 
-        return view('admin.machines.edit',compact('machines'));
+        return view('admin.assign-issues.edit',compact('assign','issues','technicianes'));
     }
     // ------------------------------------------------------------------------
 
@@ -92,16 +97,15 @@ class MachineController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $machine = Machine::find($id);
+        // $issues = AssignIssue::find($id);
+        // $assign->issue_id  =  $request->get('issue');
+        // $assign->issue  =  $request->issue;
+        // $assign->assigned_to  =  $request->assigned_to;
+        // $assign->comment  =  $request->comment;
+        // $assign->save();
 
-        $machine->machine_model = $request->machine_model;
-        $machine->machine_number = $request->machine_number;
-        $machine->machine_details = $request->machine_details;
-        $machine->machine_warranty = $request->machine_warranty;
-        $machine->save();
-
-        return redirect()->route('machines.index')
-            ->with('success', 'Record updated successfully');
+        // return redirect()->route('assign-issues.create')
+        //             ->with('success','Record update successfully !!');
     }
     // ------------------------------------------------------------------------
 
@@ -113,9 +117,8 @@ class MachineController extends Controller
      */
     public function destroy($id)
     {
-        Machine::find($id)->delete();
-        return redirect()->route('machines.index')
+         AssignIssue::find($id)->delete();
+        return redirect()->route('assign-issues.index')
                         ->with('success','Record deleted successfully !!');
     }
-    // ------------------------------------------------------------------------
 }

@@ -21,6 +21,7 @@ class TechnicianController extends Controller
         return view('admin.technicians.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 15);
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Show the form for creating a new resource.
@@ -31,6 +32,7 @@ class TechnicianController extends Controller
     {
         return view('admin.technicians.create');
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Store a newly created resource in storage.
@@ -67,7 +69,7 @@ class TechnicianController extends Controller
         $user->email  =  $request->email;
         $user->phone  =  $request->phone;
         $user->password  =  Hash::make($request->password);
-        $user->assignRole('Customer');
+        $user->assignRole('Staff');
         $user->save();        
 
         $technicians = new Technician();
@@ -86,6 +88,7 @@ class TechnicianController extends Controller
                         ->with('success','Technicians created successfully !!');
         }
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Display the specified resource.
@@ -99,6 +102,7 @@ class TechnicianController extends Controller
 
         return view('admin.technicians.show', compact('technicians'));
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Show the form for editing the specified resource.
@@ -111,6 +115,7 @@ class TechnicianController extends Controller
         $technicians = Technician::with('user')->find($id);
         return view('admin.technicians.edit',compact('technicians'));
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Update the specified resource in storage.
@@ -154,6 +159,7 @@ class TechnicianController extends Controller
                         ->with('success','Technicians created successfully !!');
         }
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Remove the specified resource from storage.
@@ -167,4 +173,5 @@ class TechnicianController extends Controller
         return redirect()->route('technicians.index')
                         ->with('success','Record deleted successfully !!');
     }
+    // ------------------------------------------------------------------------
 }

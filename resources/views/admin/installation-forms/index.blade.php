@@ -47,7 +47,7 @@
                                             <td>{{ $install->model_type }}</td>
                                             <td>{{ $install->installtion_machine_number }}</td>                                      
                                             <td>{{ $install->invoice_value }}</td>
-                                            <td><img src="{{ asset('product_images')}}/{{ $install->installtion_image }}" width="100"></td>
+                                            <td><img src="{{ asset('product_images')}}/{{ $install->installtion_image }}" width="80"></td>
                                             <td>
                                                 <a href="{{ route('installations.show',$install->id) }}" class="mr-1"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('installations.edit',$install->id) }}" class="mr-1"><i class="fas fa-user-edit"></i></a>

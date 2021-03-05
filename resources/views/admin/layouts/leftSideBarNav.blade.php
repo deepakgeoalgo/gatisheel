@@ -24,25 +24,28 @@
                 <li><a href="{{ route('machines.index') }}"><i class="feather icon-info"></i><span class="menu-item" data-i18n="View">Machine</span></a>
                 </li>
 
-                <li><a href="{{ route('installations.index') }}"><i class="feather icon-settings"></i><span class="menu-item" data-i18n="View">Installation</span></a>
+                <li><a href="{{ route('installations.index') }}"><i class="feather icon-users"></i><span class="menu-item" data-i18n="View">Customer</span></a>
                 </li>
 
-                <li><a href="{{ route('issues.index') }}"><i class="feather icon-file"></i><span class="menu-item" data-i18n="View">Create Issue</span></a>
+                <li><a href="{{ route('issues.index') }}"><i class="feather icon-file"></i><span class="menu-item" data-i18n="View">Ticket</span></a>
                 </li>
 
-                <li class="nav-item"><a href="javascript:void(0)"><i class="feather icon-link"></i><span class="menu-title" data-i18n="Team">Assign Issue</span></a>
+                <li><a href="{{ route('referred.index') }}"><i class="feather icon-send"></i><span class="menu-item" data-i18n="View">Referred</span></a>
                 </li>
 
-                <li class="nav-item"><a href="{{ route('customers.index') }}"><i class="feather icon-users"></i><span class="menu-title" data-i18n="Team">Customers</span></a>
-                </li>      
+                <!-- <li class=" nav-item"><a href="#"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="User">Ticket</span></a>
+                    <ul class="menu-content">
+                        <li><a href="{{ route('issues.index') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Open">Open</span></a>
+                        </li>
+                        <li><a href="{{ route('assign-issues.index') }}"><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Assign">Assign</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Close">Close</span></a>
+                        </li>
+                        <li><a href=""><i class="feather icon-circle"></i><span class="menu-item" data-i18n="Super Close">Super Close</span></a>
+                        </li>
+                    </ul>
+                </li> -->
                 
-                <li class=" navigation-header"><span>Support</span>
-                </li>
-                <li class=" nav-item"><a href="javascript:void(0)"><i class="feather icon-folder"></i><span class="menu-title" data-i18n="Documentation">Documentation</span></a>
-                </li>
-                <li class=" nav-item"><a href="javascript:void(0)"><i class="feather icon-life-buoy"></i><span class="menu-title" data-i18n="Raise Support">Raise Support</span></a>
-                </li>
-
             </ul>
         </div>
     </div>

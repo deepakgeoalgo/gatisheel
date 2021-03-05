@@ -22,7 +22,11 @@ class PermissionTableSeeder extends Seeder
            'installation-list',
            'installation-create',
            'installation-edit',
-           'installation-delete'
+           'installation-delete',
+           'ticket-list',
+           'ticket-create',
+           'ticket-edit',
+           'ticket-delete'
         ];
    
         foreach ($permissions as $permission) {

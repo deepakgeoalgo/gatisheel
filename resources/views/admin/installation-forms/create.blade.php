@@ -100,10 +100,10 @@
                                         <div class="form-group">
                                             <label>Type of Model</label>
                                             <select class="form-control" id="model_type" name="model_type">
-                                                <option value="">Select Model</option>    
-                                                <option value="MP4">MP4</option>
-                                                <option value="GSM Dryrun">GSM dryrun</option>
-                                                <option value="M4+Battery">M4+battery</option>
+                                                <option value="">Select Model</option>
+                                                @foreach($machines as $machine)    
+                                                <option value="{{ $machine->id }}">{{ $machine->machine_model }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
 

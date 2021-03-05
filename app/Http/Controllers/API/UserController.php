@@ -22,9 +22,8 @@ class UserController extends Controller
                 'access_token' => auth()->user()->createToken('authToken')->accessToken,
                 'token_type' => 'Bearer',
                 'user'=>auth()->user(),
-                // 'role'=> auth()->user()->getRoleNames(),
-                // 'role'=> auth()->user()->getRoleNames(),
                 'role' => $user->roles()->pluck('name'),
+                // 'Installation List' => 
 
             ]); 
         } 

@@ -19,6 +19,7 @@ class CustomerController extends Controller
         return view('admin.customers.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 15);
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Show the form for creating a new resource.
@@ -29,6 +30,7 @@ class CustomerController extends Controller
     {
         return view('admin.customers.create');
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Store a newly created resource in storage.
@@ -73,6 +75,7 @@ class CustomerController extends Controller
                         ->with('success','Record created successfully !!');
         }
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Display the specified resource.
@@ -84,6 +87,7 @@ class CustomerController extends Controller
     {
         //
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Show the form for editing the specified resource.
@@ -96,6 +100,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         return view('admin.customers.edit',compact('customer'));
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Update the specified resource in storage.
@@ -141,6 +146,7 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')
                     ->with('success','Record updated successfully !!');                
     }
+    // ------------------------------------------------------------------------
 
     /**
      * Remove the specified resource from storage.
@@ -154,4 +160,5 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')
                         ->with('success','Record deleted successfully !!');
     }
+    // ------------------------------------------------------------------------
 }

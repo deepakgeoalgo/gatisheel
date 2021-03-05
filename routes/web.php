@@ -11,6 +11,8 @@ use App\Http\Controllers\CreateIssueController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\MachineController;
+use App\Http\Controllers\AssignIssueController;
+use App\Http\Controllers\ReferredController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +65,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('machines/destroy/{id?}', [MachineController::class,'destroy'])->name('machines.destroy');
 
     // Installation form
-    Route::get('installations', [InstallationController::class,'index'])->name('installations.index');    
+    Route::get('installations', [InstallationController::class,'index'])->name('installations.index');
     Route::get('installations/create', [InstallationController::class,'create'])->name('installations.create');
     Route::post('installations', [InstallationController::class,'store'])->name('installations.store');
     Route::get('installations/show/{id?}', [InstallationController::class,'show'])->name('installations.show');
@@ -75,17 +77,23 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('issues', [CreateIssueController::class,'index'])->name('issues.index');    
     Route::get('issues/create', [CreateIssueController::class,'create'])->name('issues.create');
     Route::post('issues', [CreateIssueController::class,'store'])->name('issues.store');
+    Route::get('issues/show/{id?}', [CreateIssueController::class,'show'])->name('issues.show');
     Route::get('issues/edit/{id?}', [CreateIssueController::class,'edit'])->name('issues.edit');
     Route::post('issues/update/{id?}', [CreateIssueController::class,'update'])->name('issues.update');
     Route::get('issues/destroy/{id?}', [CreateIssueController::class,'destroy'])->name('issues.destroy');
 
-    // Customers
-    Route::get('customers', [CustomerController::class,'index'])->name('customers.index');    
-    Route::get('customers/create', [CustomerController::class,'create'])->name('customers.create');
-    Route::post('customers', [CustomerController::class,'store'])->name('customers.store');
-    Route::get('customers/edit/{id?}', [CustomerController::class,'edit'])->name('customers.edit');
-    Route::post('customers/update/{id?}', [CustomerController::class,'update'])->name('customers.update');
-    Route::get('customers/destroy/{id?}', [CustomerController::class,'destroy'])->name('customers.destroy');
+    Route::get('issues/assign/{id?}', [CreateIssueController::class,'assignEdit'])->name('assign.edit');
+    Route::post('issues/assign/{id?}', [CreateIssueController::class,'assignUpdate'])->name('assign.update');
 
+    // Assign Issue
+    Route::get('assign-issues', [AssignIssueController::class,'index'])->name('assign-issues.index'); 
+    Route::get('assign-issues/create', [AssignIssueController::class,'create'])->name('assign-issues.create');
+    Route::post('assign-issues', [AssignIssueController::class,'store'])->name('assign-issues.store');
+    Route::get('assign-issues/edit/{id?}', [AssignIssueController::class,'edit'])->name('assign-issues.edit');
+    Route::post('assign-issues/update/{id?}', [AssignIssueController::class,'update'])->name('assign-issues.update');
+    Route::get('assign-issues/destroy/{id?}', [AssignIssueController::class,'destroy'])->name('assign-issues.destroy');
+
+    // Referred 
+    Route::get('referred', [ReferredController::class,'index'])->name('referred.index');
 
 });

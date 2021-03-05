@@ -27,7 +27,7 @@
                     <ul class="nav nav-tabs mb-3" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link d-flex align-items-center active" id="account-tab" data-toggle="tab" href="#account" aria-controls="account" role="tab" aria-selected="true">
-                                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Installation details</span>
+                                <i class="feather icon-info mr-25"></i><span class="d-none d-sm-block">Ticket details</span>
                             </a>
                         </li>                        
                     </ul>
@@ -41,7 +41,7 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Issue Date</label>
-                                                <input type="date" class="form-control" placeholder="Issue Date" name="issue_date" value="{{ old('issue_date') }}" required data-validation-required-message="This issue date field is required">
+                                                <input type="date" class="form-control" placeholder="Issue Date" name="issue_date" value="{{ old('issue_date') }}" required data-validation-required-message="This issue date field is required">                        
                                             </div>
                                         </div>                                        
                                         <div class="form-group">
@@ -56,15 +56,39 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Current Status</label>
-                                                <input type="text" class="form-control" placeholder="Current Status" name="current_status" value="{{ old('current_status') }}" required data-validation-required-message="This current status field is required">
+                                                <select class="form-control" id="current_status" name="current_status">
+                                                <option value="">Select Status</option>
+                                                @foreach($statuses as $status)    
+                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                                @endforeach
+                                                </select>
+<!-- 
+                                                <input type="text" class="form-control" placeholder="Current Status" name="current_status" value="{{ old('current_status') }}" required data-validation-required-message="This current status field is required"> -->
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Ownership</label>
-                                                <input type="text" class="form-control" placeholder="Ownership" name="ownership" value="{{ old('ownership') }}" required data-validation-required-message="This ownership field is required">
+                                                <select class="form-control" id="ownership" name="ownership">
+                                                <option value="">Select Ownership</option>
+                                                @foreach($installations as $owner)    
+                                                <option value="{{ $owner->user->id }}">{{ $owner->user->phone }}</option>
+                                                @endforeach
+                                                </select>
                                             </div>
-                                        </div>                   
+                                        </div>  
+
+                                        <div class="form-group">
+                                            <div class="controls">
+                                                <label>Select Machine</label>
+                                                <select class="form-control" id="installation_id" name="installation_id">
+                                                <option value="">Select Machin</option>
+                                                @foreach($installations as $owner)    
+                                                <option value="{{ $owner->id }}">{{ $owner->installtion_machine_number }}</option>
+                                                @endforeach
+                                                </select>
+                                            </div>
+                                        </div>                 
                                     </div>                                 
 
                                     <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
@@ -86,19 +110,16 @@
 
 @section('page-script')
     <script>
-    var x = document.getElementById("installtion_address");
+        $(document).ready(function(){
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementsByName("issue_date")[0].setAttribute('max', today);  
 
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-      } else { 
-        x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-    }
+            // Current ststus
+            const statusOldValue = '{{ old('current_status') }}';
 
-    function showPosition(position) {
-      x.innerHTML = "Latitude: " + position.coords.latitude + 
-      "\nLongitude: " + position.coords.longitude;
-    }
-</script>
+            if(statusOldValue !== '') {
+              $('#current_status').val(statusOldValue);
+            } 
+        });    
+    </script>
 @endsection
