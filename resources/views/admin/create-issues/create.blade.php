@@ -2,6 +2,13 @@
 
 @section('title', 'User Create')
 
+@section('page-style')
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+@endsection
+
 @section('main_content')
 
 @if (count($errors) > 0)
@@ -69,23 +76,17 @@
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Ownership</label>
-                                                <select class="form-control" id="ownership" name="ownership">
-                                                <option value="">Select Ownership</option>
-                                                @foreach($installations as $owner)    
-                                                <option value="{{ $owner->user->id }}">{{ $owner->user->phone }}</option>
-                                                @endforeach
-                                                </select>
+                                                <input type="number" class="form-control" placeholder="Type your registred mobile number" id="ownership" name="ownership">
+                                                <div id="ownerNumber"></div>
                                             </div>
-                                        </div>  
+                                        </div>
 
                                         <div class="form-group">
                                             <div class="controls">
                                                 <label>Select Machine</label>
                                                 <select class="form-control" id="installation_id" name="installation_id">
                                                 <option value="">Select Machin</option>
-                                                @foreach($installations as $owner)    
-                                                <option value="{{ $owner->id }}">{{ $owner->installtion_machine_number }}</option>
-                                                @endforeach
+
                                                 </select>
                                             </div>
                                         </div>                 
@@ -109,6 +110,80 @@
 @endsection
 
 @section('page-script')
+
+<script>  
+        $('#ownership').keyup(function(){
+            let number =  $('#ownership').val();
+
+            console.log(number);
+            $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+            });
+
+        $.ajax({
+            url: "{{ route('owner.get_number') }}",
+            method: "POST",            
+            data: { number : number, _token: '{{ csrf_token() }}'},
+            datatype: 'html',
+            success: function(data){                
+               // console.log(data);
+                $('#ownerNumber').show();
+                var number = [];
+                for (var i = 0; i < data.length; i++) {
+                    number[i]='<a href="#"><p style="margin:1px" onclick="selectPhone('+data[i].phone+')">'+data[i].phone+'</p></a>';
+                 //  console.log('<p>'+data[i].id+'</p>');
+                }
+               $('#ownerNumber').html(number);
+            
+            },
+            error: function(data){
+               // console.log(data);            
+            },       
+        });
+            
+        }) 
+
+        function selectPhone(value){
+          //  console.log(value);
+            $('#ownership').val(value);
+            $('#ownerNumber').hide();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+            url: "{{ route('owner.get_machine') }}",
+            method: "POST",            
+            data: { machine : value, _token: '{{ csrf_token() }}'},
+            datatype: 'html',
+            success: function(data){                
+              console.log(data);
+                var machin=[];
+                for (var i = 0; i < data.length; i++) {
+                    machin[i]='<option value='+ data[i].id+'>'+ data[i].installtion_machine_number+'</option>';
+                }
+
+                // console.log(machin);
+
+                $('#installation_id').html(machin);
+                            
+            },  
+            error: function(data){
+               // console.log(data);            
+            },       
+        });
+
+
+
+        }
+</script>
+
+
+
     <script>
         $(document).ready(function(){
             var today = new Date().toISOString().split('T')[0];

@@ -83,6 +83,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('issues/destroy/{id?}', [CreateIssueController::class,'destroy'])->name('issues.destroy');
 
     Route::get('issues/assign/{id?}', [CreateIssueController::class,'assignEdit'])->name('assign.edit');
+    Route::post('issues/get_address', [CreateIssueController::class,'getTechAddress'])->name('tech.get_address');
+    Route::post('issues/get_ower_number', [CreateIssueController::class,'getOwnerNumber'])->name('owner.get_number');
+    Route::post('issues/get_ower_machine', [CreateIssueController::class,'getOwnerMachine'])->name('owner.get_machine');
     Route::post('issues/assign/{id?}', [CreateIssueController::class,'assignUpdate'])->name('assign.update');
 
     // Assign Issue

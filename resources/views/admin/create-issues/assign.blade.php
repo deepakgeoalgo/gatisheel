@@ -55,9 +55,16 @@
                                             <select class="form-control" id="assign_to" name="assign_to">
                                                 <option value="">Select Technician</option>  
                                                 @foreach (\App\Models\Technician::with('user')->get() as $key => $technician)  
-                                                <option value="{{ $technician->user->id }}">{{ $technician->user->name }}</option>
+                                                <option  value="{{ $technician->user->id }}">{{ $technician->user->name }}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+
+                                        <div class="form-group" id="techAddressDetaild">
+                                            <div class="controls">
+                                                <label>Technician Address</label>
+                                                <textarea class="form-control" id="technician_address" rows="4" readonly></textarea>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -102,6 +109,35 @@
 
 @section('page-script')
     <script>
-    
+        $(document).ready(function(){
+            $('#techAddressDetaild').hide();
+            $('#assign_to').change(function(){
+
+                let id =  $('#assign_to').val();
+                $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+                });
+
+            $.ajax({
+                url: "{{ route('tech.get_address') }}",
+                method: "POST",            
+                data: { tech_id: id, _token: '{{ csrf_token() }}'},
+                datatype: 'html',
+                success: function(data){
+                    $('#techAddressDetaild').show();
+                    $('#technician_address').html('Address : '+data.address + '\r\nDistrict : ' + data.district + '\r\nState : ' + data.state  + '\r\nPincode : ' + data.pincode );
+                        console.log(data);
+                },  
+                error: function(data){
+                        console.log(data);
+                
+                },       
+            });
+                
+            }) 
+        });    
     </script>
+
 @endsection

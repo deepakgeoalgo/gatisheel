@@ -8,6 +8,7 @@ use App\Models\Status;
 use App\Models\Technician;
 use App\Models\User;
 use App\Models\Installation;
+use DB;
 
 class CreateIssueController extends Controller
 {
@@ -41,6 +42,23 @@ class CreateIssueController extends Controller
      */
     public function create()
     {
+        // $data = CreateIssue::get('issue_description');
+
+        // $results = array();
+
+        // $queries = DB::table('create_issues')
+        //     ->where('id', 'LIKE', '%'.$data.'%')
+        //     ->take(5)->get();
+
+        // foreach ($queries as $query)
+        // {
+        //     $results[] = [ 'id' => $query->id, 'value' => $query->name ];
+        // }
+        // return response()->json($results);
+        // }
+
+
+
         $statuses = Status::get();
         $installations = Installation::get();
         return view('admin.create-issues.create',compact('statuses','installations'));
@@ -63,12 +81,14 @@ class CreateIssueController extends Controller
           //  'assign_to'    => 'required',
         ]);
 
+        $user_id = User::where('phone',$request->ownership)->value('id');
+
         $installations = CreateIssue::create([
             'installation_id' => $request->installation_id,
             'issue_date'  =>  $request->issue_date,
             'issue_description'  =>  $request->issue_description,
             'current_status'  =>  $request->current_status,
-            'ownership'  =>  $request->ownership,
+            'ownership'  =>  $user_id,
            //'assign_to'  =>  $request->ownership,
         ]);
 
@@ -148,6 +168,55 @@ class CreateIssueController extends Controller
                     ->with('success','Ticket assigned successfully !!');
     }
     // ------------------------------------------------------------------------
+
+    public function getTechAddress(Request $request)
+    {
+        $techId = $request->tech_id;
+
+        try {
+            if ($techId > 0) {
+                $data = Technician::where('user_id',$techId)->first();
+                return $data;
+            }
+            
+        } catch (\Exception $e) {
+            
+        }
+
+       // echo $techId;
+    }
+    // ------------------------------------------------------------------------
+
+    public function getOwnerNumber(Request $request)
+    {
+         try {
+            $ownerPhoneNumber = $request->number;
+            if ($ownerPhoneNumber) {
+                $queries = User::where('phone', 'like', '%' . $ownerPhoneNumber . '%')->select('phone','id')->get();
+            return $queries;
+            } else {
+               return 'Please enter a valid number';
+            }
+
+         } catch (\Exception $e) {
+             return '500 Internal Server Error';
+         }
+    }
+    // ------------------------------------------------------------------------
+    public function getOwnerMachine(Request $request)
+    {
+        try {
+            $phoneNumber = $request->machine;
+            if ($phoneNumber) {
+                $user_id = User::where('phone',$phoneNumber)->value('id');
+                $machins = Installation::where('user_id',$user_id)->get();
+                return $machins;
+            }
+            
+        } catch (Exception $e) {
+            
+        }
+    }
 
     /**
      * Remove the specified resource from storage.
